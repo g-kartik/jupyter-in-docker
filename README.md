@@ -2,7 +2,7 @@
 Configuration for running jupyter lab in docker container
 
 # Motivation
-Jupyter lab is extremely useful for protyping code, learning new libraries and documenting the things we learn. However, it is quite a pain to set up a virtual 
+Jupyter lab is extremely useful for prototyping code, learning new libraries and documenting the things we learn. However, it is quite a pain to set up a virtual 
 environment, install the required packages and extensions. Also everytime we want to run it, we have to activate the virtual environment and run the jupyter command to launch the server. Well we can write a script for it and create a destop shortcut application, but it is too much to ask from a beginner.  
 
 Enter docker based jupyter lab. I have made use of `Jupyter Docker Stacks` and used their docker image `jupyter/minimal-notebook` to create a docker based jupyter lab setup. I have created a docker compose file to make it easy to build, launch and destroy containers and also automatically restart the container on system restart.
