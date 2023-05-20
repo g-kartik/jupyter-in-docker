@@ -15,8 +15,8 @@ Enter docker based jupyter lab. I have made use of `Jupyter Docker Stacks` and u
 - Enter the password to login
 - To add additional software packages, just add them to the requirements file in pip style format and rebuild the image and restart the containers
 - We have two folders in the repo
-  - config: all the configuration files related to the jupyter application are stored here
-  - notebooks: all the notebooks created by jupyter will be saved here. we can also add our existing notebooks to it.
+  - `config`: all the configuration files related to the jupyter application are stored here
+  - `notebooks`: all the notebooks created by jupyter will be saved here. we can also add our existing notebooks to it.
 - Now even if we restart our computer, jupyter lab will always be available at `localhost:8888`
 
 Hope you enjoy this simple setup of jupyter
