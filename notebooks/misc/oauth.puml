@@ -1,0 +1,39 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+participant "Resource Owner/ User" as user
+participant "3rd Party Client\n Frontend" as fe_client
+participant "3rd Party Client\n Backend" as be_client
+participant "OAuth Authorization Server" as auth_server
+participant "OAuth Resource Server" as resrc_server
+
+'Authorization server shall have two primary endpoints, one for authorizing the client and another
+'for granting access token
+'https://authorization-server.com/authorize
+'https://authorization-server.com/token
+
+user -> fe_client: click Oauth access button
+fe_client -> be_client: call oauth access api
+be_client -> be_client: generate oauth authorization url, including \nclient_id, response_type, scope and a unique state
+be_client --> fe_client: return redirect response to authorization url
+fe_client --> user: follow redirect to authorization page
+'https://authorization-server.com/oauth/authorize?client_id=a17c21ed&response_type=code&state=5ca75bd30&redirect_uri=https%3A%2F%2Fexample-app.com%2Fauth
+
+auth_server -> user: ask for authorization approval
+user --> auth_server: grants approval
+auth_server -> fe_client: redirect to callback uri along with an\n authorization code in the query string
+fe_client -> be_client: call callback uri along with the authorization code
+be_client -> be_client: verify integrity of the state parameter to prevent CSRF
+be_client -> auth_server: POST request to the access token endpoint\n with grant_type, code, redirect_uri, client_id and client_secret
+auth_server --> be_client: return access token, refresh token, token_type and \nits expiry values on successful authorization
+be_client -> resrc_server: request for user details as per scope using the access token
+resrc_server -> auth_server: validate access token
+auth_server --> resrc_server: validation response
+resrc_server -> be_client: return user details on successful validation
+be_client -> be_client: check for user details in the database and using state variable to \n create or login user
+be_client --> fe_client: return login response with authentication cookies
+fe_client -> be_client: use cookies to call apis
+be_client --> fe_client: return api response
+fe_client --> user: display authenticated webpages
+@enduml

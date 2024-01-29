@@ -12,3 +12,10 @@ services:
       - ./config:/home/jovyan/.jupyter
     working_dir: /home/jovyan/notebooks
     restart: always
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+  redis:
+    image: redis:4.0-alpine
+    container_name: jupyter_redis
+    restart: always
